@@ -1,0 +1,6 @@
+# General
+.DS_Store
+
+# working area
+downloads/*
+

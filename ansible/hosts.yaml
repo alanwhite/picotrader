@@ -1,0 +1,17 @@
+all:
+  children:
+    workers:
+      hosts:
+        pico2:
+          ansible_host: 192.168.0.202
+        pico3:
+          ansible_host: 192.168.0.203
+        pico4:
+          ansible_host: 192.168.0.204
+        pico5:
+          ansible_host: 192.168.0.204
+    cws:
+      hosts:
+        pico1:
+          ansible_host: 192.168.0.201
+          ansible_python_interpreter: /usr/bin/python3
