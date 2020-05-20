@@ -9,7 +9,7 @@ all:
         pico4:
           ansible_host: 192.168.0.204
         pico5:
-          ansible_host: 192.168.0.204
+          ansible_host: 192.168.0.205
     cws:
       hosts:
         pico1:
