@@ -4,12 +4,15 @@ A set of automation tools and approaches for building a cluster of Odroid C2 Arm
 
 ## Current Status
 
-Applies a baseline configuration to the default Ubuntu image as shipped by HardKernel.
+Applies a baseline configuration to each host, over the default Ubuntu image as shipped by HardKernel.
 - Add user 'sysman' with sudo rights, as the ansible admin user
 - Add ssh keys from current user on control host
-- Disallow ssh directly root
+- Disallow ssh directly to root
 - Install a firewall and allow only ssh inbound connections to the host
+- Set the hostname 
 - Add an /etc/hosts file with all hosts names
+
+Provides a utility to optionally change the default root password on each host
 
 ## Ongoing Research (i.e. still to do)
 

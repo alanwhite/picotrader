@@ -5,12 +5,14 @@
     update_cache: yes
     state: latest
     force_apt_get: yes
+  tags: req_aptitude
 
 # Sudo Group Setup
 - name: Make sure we have a 'wheel' group
   group:
     name: wheel
     state: present
+  tags: secure_access
 
 - name: Allow 'wheel' group to have passwordless sudo
   lineinfile:
@@ -19,6 +21,7 @@
     regexp: "^%wheel"
     line: "%wheel ALL=(ALL) NOPASSWD: ALL"
     validate: "/usr/sbin/visudo -cf %s"
+  tags: secure_access
 
 # User + Key Setup
 - name: Create a new regular user with sudo privileges
@@ -30,12 +33,14 @@
     append: true
     create_home: true
     shell: /bin/bash
+  tags: secure_access
 
 - name: Set authorized key for remote user
   authorized_key:
     user: "{{ create_user }}"
     state: present
     key: "{{ copy_local_key }}"
+  tags: secure_access
 
 - name: Disable password authentication for root
   lineinfile:
@@ -43,28 +48,39 @@
     state: present
     regexp: "^#?PermitRootLogin"
     line: "PermitRootLogin prohibit-password"
+  tags: secure_access
 
 # Install Packages
 - name: Update apt
   apt:
     update_cache: yes
+  tags: sw_update
 
 - name: Install required system packages
   apt:
     name: "{{ sys_packages }}"
     state: latest
+  tags: sw_update
 
 # UFW Setup
 - name: UFW - Allow SSH connections
   ufw:
     rule: allow
     name: OpenSSH
+  tags: firewall
 
 - name: UFW - Deny all other incoming traffic by default
   ufw:
     state: enabled
     policy: deny
     direction: incoming
+  tags: firewall
+
+# set hostname
+- name: set hostname
+  hostname:
+    name: '{{ inventory_hostname }}'
+  tags: host_identity
 
 # hosts file - from comments in https://gist.github.com/rothgar/8793800
 - name: "generate /etc/hosts.ansible file"
