@@ -12,17 +12,20 @@ Applies a baseline configuration to each host, over the default Ubuntu image as 
 - Set the hostname 
 - Add an /etc/hosts file with all hosts names
 
-Provides a utility to optionally change the default root password on each host
+Utility admin playbooks:
+- rootpw.yaml: change the default root password on all hosts
+- aptupdate.yaml: update software on all hosts
 
 ## Ongoing Research (i.e. still to do)
 
 Providing Software Defined Storage that clusters the available free storage on each device.
-Installing and configuring Kubernetes and required components
+Installing and configuring Kubernetes and required components (microk8s / k3s / k8s )
+Deciding on database inside/outside k8s
 Port multi-threaded Java spread-betting app to Dart running in containers across the cluster 
 
 ## Steps for building the cluster
 
-1. Download the required Ubuntu operating system imagesfor the Odroid C2 nodes. In our case we have the UI image for the server appointed as the Control Workstation (CWS) and the minimal image for the other devices.
+1. Download the required Ubuntu operating system images for the Odroid C2 nodes. In our case we have the UI image for the server appointed as the Control Workstation (CWS) and the minimal image for the other devices.
 2. Flash the images to the eMMC cards on each node
 3. Set the mac up as an ansible control node
 4. Using Ansible apply the baseline configuration to all devices
