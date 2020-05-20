@@ -18,10 +18,10 @@ Utility admin playbooks:
 
 ## Ongoing Research (i.e. still to do)
 
-Providing Software Defined Storage that clusters the available free storage on each device.
-Installing and configuring Kubernetes and required components (microk8s / k3s / k8s )
-Deciding on database inside/outside k8s
-Port multi-threaded Java spread-betting app to Dart running in containers across the cluster 
+- Providing Software Defined Storage that clusters the available free storage on each device.
+- Installing and configuring Kubernetes and required components (microk8s / k3s / k8s )
+- Deciding on database inside/outside k8s
+- Port multi-threaded Java spread-betting app to Dart running in containers across the cluster 
 
 ## Steps for building the cluster
 
