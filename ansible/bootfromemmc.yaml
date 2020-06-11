@@ -1,0 +1,13 @@
+---
+- name: setup a host to boot from the local eMMC card
+  hosts: '{{ target }}'
+  become: yes
+  tasks:
+    - name: check if boot.ini was ever copied to boot.ini.emmc
+      stat:
+        path: /media/boot/boot.ini.emmc
+      register: boot_emmc
+
+    - name: move boot.ini.emmc to boot.ini 
+      command: 'cp /media/boot/boot.ini.emmc /media/boot/boot.ini'
+      when: boot_emmc.stat.islnk is defined

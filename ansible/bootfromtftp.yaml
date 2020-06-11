@@ -1,0 +1,24 @@
+---
+- name: setup a host to boot from our tftp copy of linux
+  hosts: '{{ target }}'
+  become: yes
+  tasks:
+    - name: check if boot.ini has been coped to boot.ini.emmc
+      stat:
+        path: /media/boot/boot.ini.emmc
+      register: boot_emmc
+
+    - name: copy existing boot.ini to boot.ini.emmc
+      command: 'cp /media/boot/boot.ini /media/boot/boot.ini.emmc'
+      when: boot_emmc.stat.islnk is not defined
+      
+    - name: Copy our boot.ini that's set up for tftp booting
+      copy:
+        src: ../config/boot-tftp.ini
+        dest: /media/boot/boot.ini.tftp
+        owner: root
+        group: root
+        mode: '0777'
+    
+    - name: move tftp boot.ini in to place
+      command: 'cp /media/boot/boot.ini.tftp /media/boot/boot.ini'
