@@ -11,8 +11,9 @@ Applies a baseline configuration to each host, over the default Ubuntu image as 
 - Install a firewall and allow only ssh inbound connections to the host
 - Set the hostname 
 - Add an /etc/hosts file with all hosts names
+- Installs, configures and starts Docker container runtime
 
-Provies the ability to reinstall the default minimal.img to the eMMC card on a host, useful for when you've mangled the config and want to start again
+Provides the ability to reinstall the default minimal.img to the eMMC card on a host, useful for when you've mangled the config and want to start again
 - run the rebuild.yaml playbook
 - run the baseline config again
 
@@ -25,6 +26,7 @@ Utility admin playbooks:
 ## Ongoing Research (i.e. still to do)
 
 - Providing Software Defined Storage that clusters the available free storage on each device.
+- Install container runtime from Docker
 - Installing and configuring Kubernetes and required components (microk8s / k3s / k8s )
 - Deciding on database inside/outside k8s
 - Port multi-threaded Java spread-betting app to Dart running in containers across the cluster 
@@ -67,7 +69,7 @@ ansible-playbook bootfromemmc.yaml -e "target=pico4" -i hosts.yaml -u sysman
 
 Copies the default boot.ini saved when we've run the bootfromtftp.yaml so that next boot the server will boot from the image installed on the eMMC card.
 
-## rebuild.yaml
+## rebuild.yaml (tbd)
 ansible-playbook rebuild.yaml -e "target=pico4" -i hosts.yaml -u sysman
 
 Put in place a specialised boot.ini file so that the next time the host is rebooted, it will copy down the default minimal image as provided by HardKernel to the eMMC card, and reboot from that image. The server is effectively now running a fresh install, having overwritten any customisations or configuration that had been made.
@@ -76,6 +78,14 @@ A good thing to do next would be to baseline the server again ...
 ansible-playbook -i hosts.yaml site.yaml -u root -k
 
 Will fail for every host in the inventory except the one(s) needing baselined, as it will try to ssh directly to root.
+
+## Some useful ansible commands
+
+Reboot all nodes
+ansible all -i hosts.yaml -m shell -a "reboot" -u sysman -b
+
+Shutdown all nodes
+ansible all -i hosts.yaml -m shell -a "shutdown -F now" -u sysman -b
 
 # Knowledge Base
 ## How do Odroid C2 Servers Boot

@@ -95,17 +95,81 @@
 - name: "check if debian generated hosts file has a backup"
   stat: 
     path: /etc/hosts.orig
-  tags: etc_hosts
   register: etc_hosts_orig
+  tags: etc_hosts
 
 - name: "backup debian generated /etc/hosts"
   command: "cp /etc/hosts /etc/hosts.orig"
   when: etc_hosts_orig.stat.islnk is not defined
-  tags: etc_hosts
   become: true
+  tags: etc_hosts
 
 - name: "install /etc/hosts.ansible file"
   command: "cp /etc/hosts.ansible /etc/hosts"
   tags: etc_hosts
 
-   
+# docker container runtime
+- name: "enable apt software install over https"
+  apt: 
+    pkg: 
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+    - gnupg2
+    state: latest 
+    update_cache: yes
+  tags: docker
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  tags: docker
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+  tags: docker
+
+- name: Update apt and install docker-ce
+  apt: 
+    pkg: 
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    update_cache: yes  
+    state: latest
+  tags: docker
+
+- name: "Setup docker daemon file"
+  copy: 
+    src: etc/docker/daemon.json
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+  tags: docker
+
+- name: Create systemd directory for docker
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+    mode: '0755'  
+  tags: docker
+
+- name: Restart service docker, also issue daemon-reload to pick up config changes
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: docker
+  tags: docker
+
+- name: Enable docker service
+  systemd:
+    name: docker
+    enabled: yes
+  tags: docker
+
+
