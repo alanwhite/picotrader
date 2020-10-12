@@ -172,4 +172,51 @@
     enabled: yes
   tags: docker
 
+# Firewall rules for k8s
+- name: UFW - Kubernetes API Server
+  ufw:
+    rule: allow
+    direction: in
+    proto: tcp
+    from_port: '6443' 
+  tags: k8sfw
 
+- name: UFW - etcd server client API
+  ufw:
+    rule: allow
+    direction: in
+    proto: tcp
+    from_port: '2379:2380' 
+  tags: k8sfw
+
+- name: UFW - Kubelet API
+  ufw:
+    rule: allow
+    direction: in
+    proto: tcp
+    from_port: '10250' 
+  tags: k8sfw
+
+- name: UFW - Kube scheduler
+  ufw:
+    rule: allow
+    direction: in
+    proto: tcp
+    from_port: '10251' 
+  tags: k8sfw
+
+- name: UFW - kube-controller-manager
+  ufw:
+    rule: allow
+    direction: in
+    proto: tcp
+    from_port: '10251' 
+  tags: k8sfw
+
+- name: UFW - NodePort Services
+  ufw:
+    rule: allow
+    direction: in
+    proto: tcp
+    from_port: '30000:32767' 
+  tags: k8sfw
