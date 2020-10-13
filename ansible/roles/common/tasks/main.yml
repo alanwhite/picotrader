@@ -220,3 +220,27 @@
     proto: tcp
     from_port: '30000:32767' 
   tags: k8sfw
+
+# Set ip forwarding on in /proc and in the sysctl file and reload if necessary
+- name: Enable IPv4 Forwarding 
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: yes
+    state: present
+    reload: yes
+  tags: ipfwd
+
+# k8s doesn't want swap enabled
+- name: Disable swapoff
+  shell: swapoff -a
+  tags: swapoff
+
+- name: Remove swapfile from /etc/fstab
+  mount:
+    name: "{{ item }}"
+    fstype: swap
+    state: absent
+  with_items:
+    - swap
+  tags: swapoff
