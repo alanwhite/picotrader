@@ -12,6 +12,11 @@ Applies a baseline configuration to each host, over the default Ubuntu image as 
 - Set the hostname 
 - Add an /etc/hosts file with all hosts names
 - Installs, configures and starts Docker container runtime
+- Opens firewall ports for k8s
+- Configures ipv4 forwarding
+- Disable swap
+- Builds a loadbalancer for a shared IP 
+
 
 Provides the ability to reinstall the default minimal.img to the eMMC card on a host, useful for when you've mangled the config and want to start again
 - run the rebuild.yaml playbook

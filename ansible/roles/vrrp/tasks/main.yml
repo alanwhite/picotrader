@@ -1,0 +1,13 @@
+---
+# tasks file for vrrp
+- name: Allow VRRP Multicast 
+  ufw:
+    rule: allow
+    to: 224.0.0.18
+  tags: vrrp
+
+- name: install keepalived
+  apt:
+    name: keepalived
+    state: latest
+  tags: vrrp

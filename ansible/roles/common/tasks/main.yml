@@ -244,3 +244,36 @@
   with_items:
     - swap
   tags: swapoff
+
+# k8s needs br_netfilter kernel module
+# The odroid c2 ubuntu kernel is 3.16 so is built in
+# - name: Load br_netfilter kernel mod
+#   modprobe: 
+#     name: br_netfilter
+#     state: present
+#   tags: kmods
+
+# also seems that the sysctl variables are already set so no need for script
+
+# Install k8s software
+- name: Add kubernetes repo GPG apt Key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+  tags: installk8s
+
+- name: Add kubernetes Repository
+  apt_repository:
+    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+  tags: installk8s
+
+- name: Update apt and install kubernetes packages
+  apt: 
+    pkg: 
+    - kubelet
+    - kubeadm
+    - kubectl
+    update_cache: yes  
+    state: latest
+  tags: installk8s

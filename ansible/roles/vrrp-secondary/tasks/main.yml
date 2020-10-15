@@ -1,0 +1,17 @@
+---
+# tasks file for vrrp-secondary
+# set up config file in /etc/keepalived/keepalived.conf
+- name: Set up config for vrrp-primary host
+  copy: 
+    src: keepalived.conf
+    dest: /etc/keepalived/keepalived.conf
+    owner: root
+    group: root
+    mode: '0644'
+  tags: vrrp
+
+- name: Make sure keepalived is running
+  systemd:
+    state: started
+    name: keepalived
+  tags: vrrp
