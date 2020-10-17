@@ -1,27 +1,40 @@
 all:
+  hosts:
+    pico1:
+      ansible_host: 192.168.0.201
+      ansible_python_interpreter: /usr/bin/python3
+    pico2:
+      ansible_host: 192.168.0.202
+    pico3:
+      ansible_host: 192.168.0.203
+    pico4:
+      ansible_host: 192.168.0.204
+    pico5:
+      ansible_host: 192.168.0.205  
   children:
     workers:
       hosts:
         pico2:
-          ansible_host: 192.168.0.202
         pico3:
-          ansible_host: 192.168.0.203
         pico4:
-          ansible_host: 192.168.0.204
         pico5:
-          ansible_host: 192.168.0.205
     cws:
       hosts:
         pico1:
-          ansible_host: 192.168.0.201
-          ansible_python_interpreter: /usr/bin/python3
-    vrrp:
-      children:
-        vrrp_primary:
-          hosts:
-            pico5:
-              ansible_host: 192.168.0.205
-        vrrp_secondaries:
-          hosts:
-            pico4: 
-              ansible_host: 192.168.0.204
+    vrrp_primary:
+      hosts:
+        pico5:
+    vrrp_secondaries:
+      hosts:
+        pico4: 
+    haproxy:
+      hosts:
+        pico4:
+        pico5:
+    kube_master:
+      hosts:
+        pico1:
+        pico2:
+        pico3:
+    calico_rr:
+      hosts: {}

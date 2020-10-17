@@ -15,7 +15,8 @@ Applies a baseline configuration to each host, over the default Ubuntu image as 
 - Opens firewall ports for k8s
 - Configures ipv4 forwarding
 - Disable swap
-- Builds a loadbalancer for a shared IP 
+- Builds a loadbalancer for a shared IP 192.168.0.200
+- Installs and configures HAProxy for the k8s api server on port 6443 on the control plane
 
 
 Provides the ability to reinstall the default minimal.img to the eMMC card on a host, useful for when you've mangled the config and want to start again

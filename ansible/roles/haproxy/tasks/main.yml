@@ -1,0 +1,29 @@
+---
+# tasks file for haproxy
+- name: install haproxy
+  apt: 
+    name: haproxy 
+    state: present
+  tags: haproxy
+
+- name: Enable init script
+  replace: 
+    dest: '/etc/default/haproxy' 
+    regexp: 'ENABLED=0'
+    replace: 'ENABLED=1'
+  tags: haproxy
+
+- name: Copy in config file
+  copy: 
+    src: etc/haproxy/haproxy.cfg
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: '0644'
+  tags: haproxy
+
+- name: restart haproxy
+  service: 
+    name: haproxy 
+    state: restarted
+  tags: haproxy

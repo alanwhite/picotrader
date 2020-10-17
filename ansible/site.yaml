@@ -19,4 +19,11 @@
     - vrrp
     - vrrp-secondary
 
+- name: haproxy config
+  hosts: haproxy
+  become: yes
+  roles:
+    - haproxy
+    
+
 
