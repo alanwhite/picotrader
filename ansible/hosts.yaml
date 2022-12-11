@@ -31,10 +31,11 @@ all:
       hosts:
         pico4:
         pico5:
-    kube_master:
+    kube_first_master:
       hosts:
         pico1:
+    kube_masters:
+      hosts:
         pico2:
         pico3:
-    calico_rr:
-      hosts: {}
+    

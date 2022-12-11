@@ -22,8 +22,8 @@
     mode: '0644'
   tags: haproxy
 
-- name: restart haproxy
-  service: 
-    name: haproxy 
-    state: restarted
-  tags: haproxy
+# - name: restart haproxy
+#   service: 
+#     name: haproxy 
+#     state: restarted
+#   tags: haproxy
