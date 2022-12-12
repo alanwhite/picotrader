@@ -1,0 +1,29 @@
+---
+- name: apply common config to all hosts
+  hosts: all
+  become: yes
+  roles:
+    - common
+
+- name: apply vrrp primary config
+  hosts: vrrp_primary
+  become: yes
+  roles:
+    - vrrp
+    - vrrp-primary
+
+- name: apply vrrp secondary config
+  hosts: vrrp_secondaries
+  become: yes
+  roles:
+    - vrrp
+    - vrrp-secondary
+
+- name: haproxy config
+  hosts: haproxy
+  become: yes
+  roles:
+    - haproxy
+    
+
+
