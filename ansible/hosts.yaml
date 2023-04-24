@@ -1,9 +1,19 @@
 all:
   hosts:
-    pico-n1:
-    pico-n2:
-    pico-n3:
-    pico-n4:
-    pico-n5:
+    pico-n1.local:
+    pico-n2.local:
+    pico-n3.local:
+    pico-n4.local:
+    pico-n5.local:
   children:
+    vrrp_primary:
+      hosts:
+        pico-n5.local:
+    vrrp_secondaries:
+      hosts:
+        pico-n4.local:
+    haproxy:
+      hosts:
+        pico-n4.local:
+        pico-n5.local:
     

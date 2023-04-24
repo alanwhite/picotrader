@@ -4,8 +4,7 @@
   become: yes
   tasks: 
     - name: Change root password
-      ansible.builtin.user:
+      user:
         name: root
-        state: present
         password: "{{ 'SecurityPl34se' | password_hash('sha512') }}"
 
