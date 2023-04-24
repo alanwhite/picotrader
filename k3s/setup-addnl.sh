@@ -38,5 +38,6 @@ sudo ln -s "${PV_DIR_NEW}" "${PV_DIR_OLD}"
 # =======
 # Install
 # =======
-curl -sfL https://get.k3s.io | K3S_TOKEN=fredbloggs INSTALL_K3S_EXEC="--kubelet-arg "root-dir=$KUBELET_DIR"" sh -s - server --cluster-init --tls-san 192.168.178.201
+# curl -sfL https://get.k3s.io | K3S_TOKEN=fredbloggs INSTALL_K3S_EXEC="--kubelet-arg "root-dir=$KUBELET_DIR"" sh -s - server --cluster-init
+curl -sfL https://get.k3s.io | K3S_TOKEN=fredbloggs INSTALL_K3S_EXEC="--kubelet-arg "root-dir=$KUBELET_DIR"" sh -s - server --server https://192.168.178.201:6443 --tls-san 192.168.178.201
 sudo chmod 644 /etc/rancher/k3s/k3s.yaml
